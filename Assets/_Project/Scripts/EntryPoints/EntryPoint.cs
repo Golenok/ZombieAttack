@@ -1,23 +1,22 @@
+
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+//using YG;
 
 public class EntryPoint : MonoBehaviour
 {
     public static EntryPoint instance;
-    private static bool _firstLaunchBool;
-
+    private int _crystals, _phoenix;
+    private bool _done = false;
+    private SavingManagement _savingManagement;
+    private StartSettings _startSettings;
     private Coroutine _initialParameters;
     private WaitForSeconds _ws = new WaitForSeconds(0.1f);
+    private static int _langId;
 
-    private SavingManagement _savingManagement;
-    //private StartSettings _startSettings;
-
-    //private SavesYG _savesYG;
     private void Start()
     {
-        Debug.Log("Переводчик ");
-        Debug.Log("Загрузка уровня ");
         if (instance == null)
         {
             instance = this;
@@ -28,55 +27,62 @@ public class EntryPoint : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(this.gameObject);
-
-        //if (_savingManagement == null)
-        //    _savingManagement = GameObject.Find("SavingManagement").GetComponent<SavingManagement>();
-        //if (_startSettings == null)
-        //    _startSettings = GameObject.Find("StartSettings").GetComponent<StartSettings>();
-        //if (_savingManagement == null || _startSettings == null)
-        //{
-        //    _initialParameters = StartCoroutine(InitialParameters());
-        //}
-        //else
-        //{
-        //    _startSettings.Initialized();
-        //    _crystals = _savingManagement.GetInt("CrystalMoney");
-        //    SceneManager.LoadScene("LoadingScene");
-        //    _done = true;
-        //}
+        _initialParameters = StartCoroutine(InitialParameters());
     }
-
     IEnumerator InitialParameters()
     {
         yield return _ws;
-        //if (_savingManagement == null)
-        //    _savingManagement = GameObject.Find("SavingManagement").GetComponent<SavingManagement>();
-        //if (_startSettings == null)
-        //    _startSettings = GameObject.Find("StartSettings").GetComponent<StartSettings>();
-        //if (_savingManagement == null || _startSettings == null)
+        //if (YG2.isSDKEnabled)
         //{
-        //    _initialParameters = StartCoroutine(InitialParameters());
+        //    if (_savingManagement == null)
+        //        _savingManagement = GameObject.Find("SavingManagement").GetComponent<SavingManagement>();
+        //    if (_startSettings == null)
+        //        _startSettings = GameObject.Find("StartSettings").GetComponent<StartSettings>();
+        //    _startSettings.Initialized();
+        //    _crystals = _savingManagement.GetInt("CrystalMoney");
+        //    _langId = 4;
+        //    YG2.onCorrectLang += OnСhangeLang;
+        //    SceneManager.LoadScene("LoadingScene");
+        //    yield break;
         //}
         //else
         //{
-        //    _startSettings.Initialized();
-        //    _crystals = _savingManagement.GetInt("CrystalMoney");
-        //    SceneManager.LoadScene("LoadingScene");
-        //    _done = true;
-        //yield break;
+        //    _initialParameters = StartCoroutine(InitialParameters());
         //}
     }
-
-    public void SetFirstLaunchBool(bool flag)
+    public int GetCrystals()
     {
-        _firstLaunchBool = flag;
+        if (_done)
+        {
+            _crystals = _savingManagement.GetInt("CrystalMoney");
+        }
+        return _crystals;
+    }
+    public bool GetPhoenix()
+    {
+        _phoenix = _savingManagement.GetInt("Phoenix");
+        if (_phoenix > 0)
+        {
+            _savingManagement.SetInt("Phoenix", _phoenix - 1);
+            _savingManagement.SetFloat("PhoenixPercent", _savingManagement.GetFloat("PhoenixPercent") - 10.0f);
+            _phoenix = _phoenix - 1;
+            return true;
+        }
+        return false;
+    }
+    public void SetCrystals(int crystal)
+    {
+        _crystals = _crystals - crystal;
+    }
+    public void AddCrystals(int crystal)
+    {
+        _crystals = _crystals + crystal;
+        BuyConfirm();
     }
 
-    public bool GetFirstLaunchBool()
+    public void BuyConfirm() //Подтвердить покупку
     {
-        return _firstLaunchBool;
+        _savingManagement.SetInt("CrystalMoney", _crystals);
     }
-
-
-
 }
+
