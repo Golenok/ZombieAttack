@@ -1,6 +1,6 @@
 using UnityEngine;
-//using YG;
-//using PlayerPrefs = RedefineYG.PlayerPrefs;
+using YG;
+using PlayerPrefs = RedefineYG.PlayerPrefs;
 
 public class SavingManagement : MonoBehaviour
 {
@@ -40,7 +40,7 @@ public class SavingManagement : MonoBehaviour
 
     private void Save()
     {
-        PlayerPrefs.Save();
-        //YG2.SaveProgress();
+        //PlayerPrefs.Save();
+        YG2.SaveProgress();
     }
 }

@@ -1,24 +1,36 @@
 using UnityEngine;
 using UnityEngine.UI;
-//using YG;
+using YG;
 
 public class LanguageChanges : MonoBehaviour
 {
-    [Header("К страны")]
+    [Header("Страны")]
     [SerializeField] private Button _buttonRu, _buttonEn, _buttonEs, _buttonTr;
 
-    //private Translator _translator;
 
     private void Start()
     {
-        //if (YG2.lang == "ru")
-        //    language(0);
-        //if (YG2.lang == "en")
-        //    language(1);
-        //if (YG2.lang == "es")
-        //    language(2);
-        //if (YG2.lang == "tr")
-        //    language(3);
+        if (YG2.lang == "ru")
+        {
+            language(0);
+        }
+        else if (YG2.lang == "en")
+        {
+            language(1);
+        }
+        else if (YG2.lang == "es")
+        {
+            language(2);
+        }
+        else if (YG2.lang == "tr")
+        {
+            language(3);
+        }
+        else
+        {
+            language(1);
+        }
+        
     }
 
     private void language(int id)
@@ -57,18 +69,18 @@ public class LanguageChanges : MonoBehaviour
     {
         switch (id)
         {
-            //case 0:
-            //    YG2.lang = "ru";
-            //    break;
-            //case 2:
-            //    YG2.lang = "es";
-            //    break;
-            //case 3:
-            //    YG2.lang = "tr";
-            //    break;
-            //default:
-            //    YG2.lang = "en";
-            //    break;
+            case 0:
+                YG2.lang = "ru";
+                break;
+            case 2:
+                YG2.lang = "es";
+                break;
+            case 3:
+                YG2.lang = "tr";
+                break;
+            default:
+                YG2.lang = "en";
+                break;
         }
         language(id);
 

@@ -1,0 +1,27 @@
+{
+    "stringKeys": [
+        "LoadingScene"
+    ],
+    "stringValues": [
+        "Menu"
+    ],
+    "floatKeys": [],
+    "floatValues": [],
+    "intKeys": [
+        "firstLaunch",
+        "Money"
+    ],
+    "intValues": [
+        1,
+        777
+    ],
+    "intExample": 5,
+    "strExample": "Hello!",
+    "boolExample": [
+        false,
+        false,
+        false,
+        false
+    ],
+    "idSave": 3
+}
